@@ -12,15 +12,71 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@theme {
+  /* Primary Brand Colors */
+  --color-jewelGold: #D4AF37; /* Warm gold for highlights and CTAs */
+  --color-royalAmber: #FFC107; /* Vibrant amber for gradients and backgrounds */
+
+  /* Secondary/Accent Colors */
+  --color-silverGlow: #C0C0C0; /* Soft silver for text and borders */
+  --color-roseQuartz: #F8BBD0; /* Subtle pinkish tone for accents or modals */
+
+  /* Neutral Colors */
+  --color-pearlWhite: #F5F5F5; /* Off-white for backgrounds */
+  --color-charcoalShade: #424242; /* Dark gray for text and navigation */
+
+  /* Error/Success States */
+  --color-rubyRed: #D32F2F; /* Bold red for errors */
+  --color-emeraldGreen: #388E3C; /* Rich green for success */
+}
+
+/* Optional: Custom utilities or components using the colors */
+@layer components {
+  .jewel-theme {
+    @apply bg-gradient-to-r from-pearlWhite to-royalAmber;
+  }
+  .error-message {
+    @apply text-rubyRed bg-rubyRed/10 p-2 rounded-md;
+  }
+  .success-message {
+    @apply text-emeraldGreen bg-emeraldGreen/10 p-2 rounded-md;
+  }
+}
+.bg-jewelGold {
+  background-color: #d4a017; /* Custom jewel gold color */
+}
+
+.bg-jewelDarkGold {
+  background-color: #a67b0a; /* Darker shade for hover */
+}
+
+nav .md:hidden .absolute {
+  display: none;
+}
+
+nav .md:hidden button:focus + .absolute,
+nav .md:hidden button:active + .absolute {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  nav .md:hidden {
+    display: none;
+  }
+  nav .flex {
+    display: flex !important;
+  }
 }
