@@ -1,4 +1,4 @@
-// app/products/page.js
+// Updated app/products/page.js (minor update for populated fields, but mostly same; add populate in GET already done)
 "use client";
 import React, { useState, useEffect } from "react";
 import Table from "../../components/ui/Table";
@@ -121,9 +121,8 @@ export default function ProductsPage() {
           { header: "Cost Price (₹)", key: "costPrice" },
           { header: "Sale Price (₹)", key: "salePrice" },
           {
-            header: "Profit Margin",
-            render: (row) =>
-              (((row.salePrice - row.costPrice) / row.costPrice) * 100).toFixed(2) + "%",
+            header: "Margin %",
+            render: (row) => row?.marginPercent?.toFixed(2) + "%",
           },
           {
             header: "Actions",

@@ -65,7 +65,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-amber-100 to-jewelGold">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h1 className="text-2xl font-bold text-jewelGold mb-6 text-center">
-          {isLoginMode ? "Login to JewelTrendz" : "Register for JewelTrendz"}
+          {isLoginMode ? "Login to AV Jewellery" : "Register for AV Jewellery"}
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           {!isLoginMode && (
@@ -89,7 +89,7 @@ export default function LoginPage() {
               value={formData.email}
               onChange={handleChange}
               className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:ring-jewelGold focus:border-jewelGold"
-              placeholder="e.g., admin@jeweltrendz.com"
+              placeholder="e.g., admin@AV Jewellery.com"
               required
             />
           </div>

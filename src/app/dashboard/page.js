@@ -54,7 +54,7 @@ export default function DashboardPage() {
 
   return (
     <div className="p-8 bg-gradient-to-r from-amber-50 to-jewelGold/10 min-h-screen">
-      <h1 className="text-3xl font-bold text-jewelGold mb-8">JewelTrendz Dashboard</h1>
+      <h1 className="text-3xl font-bold text-jewelGold mb-8">AV Jewellery Dashboard</h1>
 
       {/* Summary Card */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
