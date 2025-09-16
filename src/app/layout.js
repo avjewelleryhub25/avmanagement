@@ -3,9 +3,9 @@ import NavBar from "../components/NavBar/NavBar";
 import "./globals.css";
 
 export const metadata = {
-  title: "JewelTrendz - Manage Your Jewellery Business",
+  title: "AV Jewellery - Manage Your Jewellery Business",
   description:
-    "JewelTrendz: A dashboard to manage your artificial jewellery e-commerce business, track inventory, sales, and profits across Instagram, Meesho, Flipkart, and Amazon.",
+    "AV Jewellery: A dashboard to manage your artificial jewellery e-commerce business, track inventory, sales, and profits across Instagram, Meesho, Flipkart, and Amazon.",
 };
 
 export default function RootLayout({ children }) {

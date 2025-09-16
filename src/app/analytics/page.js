@@ -47,7 +47,7 @@ export default function AnalyticsPage() {
 
   return (
     <div className="p-8 bg-gradient-to-r from-amber-50 to-jewelGold/10 min-h-screen">
-      <h1 className="text-3xl font-bold text-jewelGold mb-8">JewelTrendz Analytics</h1>
+      <h1 className="text-3xl font-bold text-jewelGold mb-8">AV Jewellery Analytics</h1>
 
       {/* Summary Card */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-8">

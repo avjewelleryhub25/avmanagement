@@ -19,16 +19,22 @@ export default function NavBar() {
   return (
     <nav className="bg-jewelGold text-white p-4 shadow-md flex">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-xl font-bold">JewelTrendz</div>
+        <div className="text-xl font-bold">AV Jewellery</div>
         <div className="flex gap-6 items-center max-md:hidden">
           <Link href="/dashboard" className="hover:underline">
             Dashboard
+          </Link>
+          <Link href="/addons" className="hover:underline">
+            AddonsPage
           </Link>
           <Link href="/products" className="hover:underline">
             Products
           </Link>
           <Link href="/history" className="hover:underline">
             Sales History
+          </Link>
+          <Link href="/customer" className="hover:underline">
+            Customers
           </Link>
           <Link href="/analytics" className="hover:underline">
             Analytics
@@ -49,11 +55,17 @@ export default function NavBar() {
             <Link href="/dashboard" className="block py-2 px-4 hover:bg-jewelDarkGold">
               Dashboard
             </Link>
+            <Link href="/addons" className="block py-2 px-4 hover:bg-jewelDarkGold">
+              AddonsPage
+            </Link>
             <Link href="/products" className="block py-2 px-4 hover:bg-jewelDarkGold">
               Products
             </Link>
             <Link href="/history" className="block py-2 px-4 hover:bg-jewelDarkGold">
               Sales History
+            </Link>
+            <Link href="/customer" className="block py-2 px-4 hover:bg-jewelDarkGold">
+              Customers
             </Link>
             <Link href="/analytics" className="block py-2 px-4 hover:bg-jewelDarkGold">
               Analytics

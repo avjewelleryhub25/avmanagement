@@ -48,6 +48,8 @@ export async function PUT(req,context) {
     }
 
     // Find product
+    console.log(sale.productId,"--------------------------------------");
+    
     const product = await Product.findById(sale.productId);
     if (!product) {
       return Response.json({ error: "Associated product not found" }, { status: 404 });

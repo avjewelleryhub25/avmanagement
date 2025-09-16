@@ -1,4 +1,4 @@
-// app/history/page.js
+// Updated app/history/page.js
 "use client";
 import React, { useState, useEffect } from "react";
 import Table from "../../components/ui/Table";
@@ -88,7 +88,7 @@ export default function HistoryPage() {
   return (
     <div className="p-8 bg-gradient-to-r from-amber-50 to-jewelGold/10 min-h-screen">
       <h1 className="text-3xl font-bold text-jewelGold mb-8">Sales History</h1>
-      <Button onClick={() => setIsModalOpen(true)} className="mb-6">
+      <Button onClick={() => { setEditingSale(null); setIsModalOpen(true); }} className="mb-6">
         Record New Sale
       </Button>
       <Modal
@@ -110,8 +110,10 @@ export default function HistoryPage() {
       </Modal>
       <Table
         columns={[
-          { header: "Product", key: "productId?.name" },
+          { header: "Product", key: "productId.name" },
+          { header: "Customer", key: "customerId.name" },
           { header: "Quantity", key: "quantity" },
+          { header: "Total Price (₹)", key: "totalPrice" },
           { header: "Platform", key: "platform" },
           { header: "Profit (₹)", key: "profit" },
           {

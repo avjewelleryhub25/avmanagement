@@ -31,8 +31,6 @@ export default function Table({ columns, data, onRowClick }) {
                 }`}
             >
               {columns.map((col, colIndex) => {
-                console.log(getValueByPath(row, col.key), "------------");
-
                 return (
                   <td key={colIndex} className="p-3">
                     {col.render ? col.render(row) : getValueByPath(row, col.key)}
