@@ -1,11 +1,9 @@
-// Updated app/api/sales/route.js
 import connectDB from "../../../lib/mongodb";
 import Sale from "../../../models/Sale";
 import Product from "../../../models/Product";
-import PackingMaterial from "../../../models/PackingMaterial";
-import FreeGift from "../../../models/FreeGift";
-import DeliveryCharge from "../../../models/DeliveryCharge";
+import Customer from "../../../models/Customer"; 
 import { authMiddleware } from "../../../lib/auth";
+import mongoose from "mongoose";
 
 export async function GET(req) {
   try {
@@ -13,6 +11,7 @@ export async function GET(req) {
     if (authError) return authError;
 
     await connectDB();
+    console.log("Models registered:", mongoose.modelNames()); // Debug log
     const sales = await Sale.find()
       .populate("productId customerId")
       .sort({ date: -1 });
@@ -31,7 +30,6 @@ export async function POST(req) {
     await connectDB();
     const body = await req.json();
 
-    // Validate
     if (!body.productId || !body.customerId || !body.quantity || !body.platform) {
       return Response.json({ error: "Product ID, customer ID, quantity, and platform are required" }, { status: 400 });
     }
@@ -39,7 +37,6 @@ export async function POST(req) {
       return Response.json({ error: "Quantity must be at least 1" }, { status: 400 });
     }
 
-    // Fetch product populated
     const product = await Product.findById(body.productId)
       .populate("packingId freeGiftId deliveryId");
     if (!product) {
@@ -49,7 +46,6 @@ export async function POST(req) {
       return Response.json({ error: `Insufficient stock: only ${product.stock} available` }, { status: 400 });
     }
 
-    // Calculate totalPrice and profit
     const totalPrice = body.quantity * product.salePrice;
     let additionalCost = 0;
     if (product.packingId) additionalCost += product.packingId.cost;
@@ -60,10 +56,9 @@ export async function POST(req) {
     const totalUnitCost = product.costPrice + additionalCost;
     const profit = totalPrice - (body.quantity * totalUnitCost);
 
-    // Create sale
     const sale = new Sale({
       productId: body.productId,
-      customerId: body?.customerId,
+      customerId: body.customerId, // Remove optional chaining
       quantity: body.quantity,
       totalPrice,
       platform: body.platform,
@@ -71,7 +66,6 @@ export async function POST(req) {
     });
     await sale.save();
 
-    // Update stock
     product.stock -= body.quantity;
     await product.save();
 
