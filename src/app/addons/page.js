@@ -39,9 +39,9 @@ export default function AddonsPage() {
     });
   }, []);
 
-  const handleAddonSubmit = async (data, type, setList, currentList) => {
+  const handleAddonSubmit = async (data, type, setList) => {
     try {
-      const method = editingPacking ? "PUT" : "POST"; // Reuse for all, but adjust url
+      const method = editingPacking || editingGift || editingDelivery ? "PUT" : "POST";
       let url;
       let setEditing;
       if (type === "packing") {
@@ -68,7 +68,7 @@ export default function AddonsPage() {
       }
       const updated = await response.json();
       setList((prev) =>
-        setEditing ? prev.map((item) => (item._id === updated._id ? updated : item)) : [updated, ...prev]
+        method === "PUT" ? prev.map((item) => (item._id === updated._id ? updated : item)) : [updated, ...prev]
       );
       closeModals(type);
     } catch (err) {
@@ -79,11 +79,14 @@ export default function AddonsPage() {
   const handleAddonDelete = async (id, type, setList) => {
     if (!confirm(`Are you sure you want to delete this ${type}?`)) return;
     try {
-      const response = await fetch(`/${type}s/${id}`, { // api/packings etc.
+      const response = await fetch(`/api/${type}s/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-      if (!response.ok) throw new Error("Failed to delete");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to delete");
+      }
       setList((prev) => prev.filter((item) => item._id !== id));
     } catch (err) {
       setError(err.message);
@@ -106,21 +109,17 @@ export default function AddonsPage() {
   if (loading) return <div className="p-8 text-center text-gray-600">Loading add-ons...</div>;
   if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
 
-  const getDeleteUrl = (type, id) => `/api/${type}s/${id}`;
   const getEdit = (type, item) => {
-    if (type === "packing") setEditingPacking(item);
-    else if (type === "gift") setEditingGift(item);
-    else setEditingDelivery(item);
-  };
-  const getModalOpen = (type) => {
-    if (type === "packing") return packingModalOpen;
-    if (type === "gift") return giftModalOpen;
-    return deliveryModalOpen;
-  };
-  const setModalOpen = (type, open) => {
-    if (type === "packing") setPackingModalOpen(open);
-    if (type === "gift") setGiftModalOpen(open);
-    setDeliveryModalOpen(open);
+    if (type === "packing") {
+      setEditingPacking(item);
+      setPackingModalOpen(true);
+    } else if (type === "gift") {
+      setEditingGift(item);
+      setGiftModalOpen(true);
+    } else {
+      setEditingDelivery(item);
+      setDeliveryModalOpen(true);
+    }
   };
 
   return (
@@ -136,7 +135,7 @@ export default function AddonsPage() {
         <Modal isOpen={packingModalOpen} onClose={() => closeModals("packing")} title={editingPacking ? "Edit Packing" : "Add New Packing"}>
           <AddonForm
             initialData={editingPacking || {}}
-            onSubmit={(data) => handleAddonSubmit(data, "packing", setPackings, packings)}
+            onSubmit={(data) => handleAddonSubmit(data, "packing", setPackings)}
             onCancel={() => closeModals("packing")}
             type="packing"
           />
@@ -172,7 +171,7 @@ export default function AddonsPage() {
         <Modal isOpen={giftModalOpen} onClose={() => closeModals("gift")} title={editingGift ? "Edit Gift" : "Add New Gift"}>
           <AddonForm
             initialData={editingGift || {}}
-            onSubmit={(data) => handleAddonSubmit(data, "gift", setGifts, gifts)}
+            onSubmit={(data) => handleAddonSubmit(data, "gift", setGifts)}
             onCancel={() => closeModals("gift")}
             type="gift"
           />
@@ -208,7 +207,7 @@ export default function AddonsPage() {
         <Modal isOpen={deliveryModalOpen} onClose={() => closeModals("delivery")} title={editingDelivery ? "Edit Delivery" : "Add New Delivery"}>
           <AddonForm
             initialData={editingDelivery || {}}
-            onSubmit={(data) => handleAddonSubmit(data, "delivery", setDeliveries, deliveries)}
+            onSubmit={(data) => handleAddonSubmit(data, "delivery", setDeliveries)}
             onCancel={() => closeModals("delivery")}
             type="delivery"
           />
